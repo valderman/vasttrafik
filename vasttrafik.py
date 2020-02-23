@@ -17,7 +17,7 @@ class departure:
     def __init__(self, line, direction, minsLeft, minsNext = None):
         self.line = str(line)
         self.direction = str(direction)
-        self.minsLeft = int(minsLeft) if minsLeft != 'now' else 0
+        self.minsLeft = int(minsLeft) if minsLeft != 'now' and minsLeft != '' else 0
         self.minsNext = int(minsNext) if minsNext else None
 
     def __str__(self):
