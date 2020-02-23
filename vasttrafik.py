@@ -61,21 +61,13 @@ def find_stops(name):
 def departures(stop):
     '''
     Returns the next few (as defined by Västtrafik's whims) departures from
-    the given stop. Stops may be given either as Västtrafik stop IDs or
-    as a regular expression to match against all available stop names.
-    For regular expressions, the first matching stop (in alphabetical order)
-    will be used.
+    the given stop. Stops are given as Västtrafik stop IDs, obtained by calling
+    find_stops.
     '''
     if type(stop) == int:
         result = requests.get(__departures_url + str(stop))
         deps = json.loads(result.content.decode('utf-8-sig'))
         return [departure(d['name'], d['direction'], d['rtMinutesLeft1'], d['rtMinutesLeft2']) for d in deps]
-    elif type(stop) == str:
-        stopinfo = find_stop(stop)
-        if stopinfo:
-            return departures(stopinfo[0])
-        else:
-            return None
     else:
         raise TypeError
 
